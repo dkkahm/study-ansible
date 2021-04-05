@@ -1,0 +1,11 @@
+hadoop1
+hadoop2
+hadoop3
+
+[namenode]
+hadoop1
+
+[slaves]
+hadoop1
+hadoop2
+hadoop3
