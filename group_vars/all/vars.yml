@@ -1,4 +1,4 @@
-ansible_private_key_file: ./ansibleuser
+ansible_private_key_file: /home/dkkam/.ssh/ansibleuser
 ansible_ssh_user: dkkam
 hadoop_basename: hadoop-2.10.1
 hadoop_tarball: files/{{ hadoop_basename }}.tar.gz
