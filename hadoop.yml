@@ -3,7 +3,7 @@
   become: yes
   vars:
     hosts_path: /etc/hosts
-    download_path: /home/dkkam/Downloads
+    download_path: /home/{{ hadoop_user }}/Downloads
     usr_local: /usr/local
   tasks:
   - name: add host to /etc/hosts
@@ -15,6 +15,20 @@
     service:
       name: firewalld
       state: stopped
+  - name: ssh-keygen
+    connection: local
+    command: "ssh-keygen -b 2048 -t rsa -f /home/{{ hadoop_user }}/.ssh/id_rsa -q -N ''"
+    ignore_errors: yes
+    run_once: true
+  - name: import id_rsa.pub
+    connection: local
+    command: "cat /home/{{ hadoop_user }}/.ssh/id_rsa.pub"
+    register: id_pub
+    run_once: true
+  - name: copy id to hosts
+    lineinfile:
+      dest: /home/{{ hadoop_user }}/.ssh/authorized_keys
+      line: "{{ id_pub.stdout }}"
   - name: install openjdk
     package:
       name: java-1.8.0-openjdk-devel

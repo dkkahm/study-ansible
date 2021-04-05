@@ -3,3 +3,4 @@ ansible_ssh_user: dkkam
 hadoop_basename: hadoop-2.10.1
 hadoop_tarball: files/{{ hadoop_basename }}.tar.gz
 hadoop_home: /usr/local/hadoop
+hadoop_user: dkkam
