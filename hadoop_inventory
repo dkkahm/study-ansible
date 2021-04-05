@@ -1,0 +1,49 @@
+#!/usr/bin/python3
+
+import sys, os
+import yaml
+import json
+
+# print(len(sys.argv))
+
+# for argv in sys.argv:
+#	print(argv)
+
+groups = {
+	'namenode': [],
+	'slaves': []
+}
+
+hosts = {
+}
+
+with open('group_vars/all/hadoop_hosts.yml') as f:
+	hadoop_hosts = yaml.load(f, Loader=yaml.FullLoader)
+
+# print(hadoop_hosts)
+
+for host in hadoop_hosts['hadoop_hosts']:
+	hosts[host['hostname']] = { 'ansible_host': host['ip'] }
+
+	hostname = host['hostname']
+	if 'roles' in host:
+		if 'namenode' in host['roles']:
+			groups['namenode'].append(hostname)
+		if 'slave' in host['roles']:
+			groups['slaves'].append(hostname)
+	else:
+		groups['slaves'].append(hostname)
+	
+for host in hosts:
+	hosts[host]['hadoop_namenode'] = groups['namenode'][0]
+	hosts[host]['hadoop_slaves'] = groups['slaves']
+
+# print(hosts)
+# print(groups)
+
+if sys.argv[1] == '--list':
+	print(json.dumps(groups))
+
+if sys.argv[1] == '--host':
+	hostname = sys.argv[2]
+	print(json.dumps(hosts[hostname]))

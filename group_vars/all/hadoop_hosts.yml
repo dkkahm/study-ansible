@@ -1,0 +1,10 @@
+hadoop_hosts:
+- ip: 10.0.2.17
+  hostname: hadoop1
+  roles:
+    - namenode
+    - slave
+- ip: 10.0.2.18
+  hostname: hadoop2
+- ip: 10.0.2.19
+  hostname: hadoop3
