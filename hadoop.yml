@@ -19,17 +19,8 @@
     package:
       name: java-1.8.0-openjdk-devel
       state: present
-  - name: get javac_path
-    command: which javac
-    register: javac_path
-  - name: get javac_full_path
-    command: "readlink -f {{ javac_path['stdout_lines'][0] }}"
-    register: javac_full_path
-  - name: get javac_dirname
-    command: "dirname {{ javac_full_path['stdout_lines'][0] }}"
-    register: javac_dirname
   - name: get java_home
-    command: "dirname {{ javac_dirname['stdout_lines'][0] }}"
+    shell: "dirname $(dirname $(readlink -f $(which javac)))"
     register: java_home
   - name: add java_home to profile
     lineinfile:
