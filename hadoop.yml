@@ -89,6 +89,7 @@
         - "<property><name>dfs.replication</name><value>{{ hadoop_slaves | length }}</value></property>"
         - "<property><name>dfs.name.dir</name><value>{{ hadoop_home }}/data/namenode</value></property>"
         - "<property><name>dfs.data.dir</name><value>{{ hadoop_home }}/data/datanode</value></property>"
+        - "<property><name>dfs.datanode.hostname</name><value>{{ ansible_facts['hostname'] }}</value></property>"
   - name: copy mapred-site.xml.templates to mapred-site.xml
     command: cp {{ hadoop_home }}/etc/hadoop/mapred-site.xml.template {{ hadoop_home }}/etc/hadoop/mapred-site.xml
   - name: set mapred-site.xml
