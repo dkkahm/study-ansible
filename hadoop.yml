@@ -34,6 +34,14 @@
       line: "{{ item }}"
     loop:
     - JAVA_HOME={{ java_home['stdout_lines'][0] }}
+  - name: /usr/local/hadoop link is not exists
+    file:
+      path: "{{ usr_local }}/hadoop"
+      state: absent
+  - name: /usr/local/hadoop is not exists
+    file:
+      path: "{{ usr_local }}/{{ hadoop_basename }}"
+      state: absent
   - name: extract hadoop to /usr/local
     unarchive:
       src: "{{ hadoop_tarball }}"
